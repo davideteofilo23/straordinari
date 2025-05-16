@@ -7,9 +7,13 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# Inizializza Firebase da file locale
-cred = credentials.Certificate("firebase.json")
+# Inizializza Firebase da variabile ambiente FIREBASE_CONFIG (JSON string)
+import json
+
+firebase_json = json.loads(os.environ.get("FIREBASE_CONFIG"))
+cred = credentials.Certificate(firebase_json)
 firebase_admin.initialize_app(cred)
+
 db = firestore.client()
 
 @app.route("/")
