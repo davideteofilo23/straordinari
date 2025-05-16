@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDHGDK8B-BAUzStOA5SXd7hCCogMxD7XQY",
+      authDomain: "straordinari-6d350.firebaseapp.com",
+      projectId: "straordinari-6d350",
+      storageBucket: "straordinari-6d350.firebasestorage.app",
+      messagingSenderId: "839538461945",
+      appId: "1:839538461945:web:b51aae53a80105b2e9e628"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.loginUser = function() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const email = userCredential.user.email;
+          fetch("/session", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email })
+          }).then(() => {
+            window.location.href = "/home";
+          });
+        })
+        .catch((error) => {
+          document.getElementById("error").innerText = "Email o password errati.";
+        });
+    }
+  </script>
+</head>
+<body>
+  <div class="main-content">
+    <div class="card">
+      <h2>Login</h2>
+      <input type="email" id="email" placeholder="Email"><br><br>
+      <input type="password" id="password" placeholder="Password"><br><br>
+      <button class="button" onclick="loginUser()">Login</button>
+      <p id="error" style="color: red;"></p>
+    </div>
+  </div>
+</body>
+</html>

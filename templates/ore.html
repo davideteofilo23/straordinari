@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Straordinari</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script>
+    function calcolaOre() {
+      const dalle = document.getElementById("dalle").value;
+      const alle = document.getElementById("alle").value;
+      if (dalle && alle) {
+        const [dH, dM] = dalle.split(":").map(Number);
+        const [aH, aM] = alle.split(":").map(Number);
+        let start = dH * 60 + dM;
+        let end = aH * 60 + aM;
+        let diff = end - start;
+        if (diff > 0) {
+          const ore = Math.floor(diff / 60);
+          const minuti = diff % 60;
+          document.getElementById("totale").value = ore + (minuti > 0 ? ("." + (minuti < 10 ? "0" : "") + minuti) : "");
+        } else {
+          document.getElementById("totale").value = "0";
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  
+
+
+<div class="sidebar">
+  <h3>Menu</h3>
+  <ul>
+    <li><a href="/home">Home</a></li>
+    <li><a href="/ore">Straordinari</a></li>
+    <li><a href="/impostazioni">Impostazioni</a></li>
+    <li><a href="/firma">Firma</a></li>
+    <li><a href="/invia">Invia PDF</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</div>
+
+
+
+  <div class="main-content">
+    <h2>Inserisci Straordinario</h2>
+    <form method="post">
+      <div class="card">
+        <label>Data:</label><br>
+        <input type="date" name="data" value="{{ data_oggi }}"><br><br>
+
+        <label>Dalle:</label><br>
+        <input type="time" name="dalle" id="dalle" onchange="calcolaOre()"><br><br>
+
+        <label>Alle:</label><br>
+        <input type="time" name="alle" id="alle" onchange="calcolaOre()"><br><br>
+
+        <label>Motivo:</label><br>
+        <input type="text" name="motivo"><br><br>
+
+        <label>Totale ore:</label><br>
+        <input type="text" name="totale" id="totale" readonly><br><br>
+
+        <button class="button" type="submit">Salva Straordinario</button>
+      </div>
+    </form>
+
+    <h3>Ore Straordinarie Inserite</h3>
+    <div class="card">
+      {% if lista_ore %}
+        <table>
+          <tr><th>Data</th><th>Dalle</th><th>Alle</th><th>Motivo</th><th>Totale</th></tr>
+          {% for giorno in lista_ore %}
+            <tr>
+              <td>{{ giorno['data'] }}</td>
+              <td>{{ giorno['dalle'] }}</td>
+              <td>{{ giorno['alle'] }}</td>
+              <td>{{ giorno['motivo'] }}</td>
+              <td>{{ giorno['totale'] }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>Nessuna ora registrata.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

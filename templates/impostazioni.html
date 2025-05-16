@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Impostazioni Utente</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  
+
+<div class="sidebar">
+  <h3>Menu</h3>
+  <ul>
+    <li><a href="/home">Home</a></li>
+    <li><a href="/ore">Straordinari</a></li>
+    <li><a href="/impostazioni">Impostazioni</a></li>
+    <li><a href="/firma">Firma</a></li>
+    <li><a href="/invia">Invia PDF</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</div>
+
+
+  <div class="main-content">
+    <h2>Impostazioni Utente</h2>
+
+    {% if salvato %}
+      <div class="card" style="background-color: #d4edda; color: #155724;">
+        ✅ Impostazioni salvate correttamente!
+      </div>
+    {% endif %}
+
+    <form method="post">
+      <div class="card">
+        <label>Nome e Cognome:</label><br>
+        <input type="text" name="nome" value="{{ utente.nome }}"><br><br>
+
+        <label>Codice Operatore:</label><br>
+        <input type="text" name="codice_operatore" value="{{ utente.codice_operatore }}"><br><br>
+
+        <label>Codice e Nome Filiale:</label><br>
+        <input type="text" name="filiale" value="{{ utente.filiale }}"><br><br>
+
+        <label>Email per ricezione PDF:</label><br>
+        <input type="email" name="email_pdf" value="{{ utente.email_pdf }}"><br><br>
+
+        <button class="button" type="submit">Salva Impostazioni</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

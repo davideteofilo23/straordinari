@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Invia PDF</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h3>Menu</h3>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/ore">Straordinari</a></li>
+      <li><a href="/impostazioni">Impostazioni</a></li>
+      <li><a href="/firma">Firma</a></li>
+      <li><a href="/invia">Invia PDF</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h2>Invia PDF delle Ore Straordinarie</h2>
+    <div class="card">
+      <p>Premi il pulsante per scaricare e allegare il PDF nella tua email.</p>
+      <a href="mailto:{{ email }}?subject=Straordinari%20Maggio%202025&body=In%20allegato%20il%20riepilogo%20degli%20straordinari.">
+        <button class="button" type="button" onclick="window.location.href='/static/straordinari_con_logo_ivs.pdf'">Invia PDF</button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
