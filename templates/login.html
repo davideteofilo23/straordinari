@@ -1,20 +1,40 @@
-<script>
-  document.querySelector("form").addEventListener("submit", async (e) => {
-    e.preventDefault();
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="main-content">
+    <div class="card">
+      <h2>Accedi</h2>
+      <form method="post">
+        <input type="email" name="email" placeholder="Email" required><br><br>
+        <input type="password" name="password" placeholder="Password" required><br><br>
+        <button type="submit" class="button">Login</button>
+      </form>
+    </div>
+  </div>
 
-    const email = document.querySelector("[name='email']").value;
-    const password = document.querySelector("[name='password']").value;
+  <script>
+    document.querySelector("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const res = await fetch("/session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
+      const email = document.querySelector("[name='email']").value;
+      const password = document.querySelector("[name='password']").value;
+
+      const res = await fetch("/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+
+      if (res.ok) {
+        window.location.href = "/home";
+      } else {
+        alert("Login fallito");
+      }
     });
-
-    if (res.ok) {
-      window.location.href = "/home";
-    } else {
-      alert("Login fallito");
-    }
-  });
-</script>
+  </script>
+</body>
+</html>
